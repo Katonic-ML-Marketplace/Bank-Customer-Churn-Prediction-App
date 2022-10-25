@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state = 'auto'
 )
 
-st.sidebar.image('logo.png')
+st.sidebar.image('image/logo.png')
 st.sidebar.title('Bank Customer Churn Prediction')
 st.sidebar.write('---')
 
@@ -33,7 +33,7 @@ This app predict **Whether Customers are Planning to Churn or remain.**!
 st.write('---')
 
 # Loads the Dataset
-data_path = 'bank_customer_churn.csv'
+data_path = 'data/bank_customer_churn.csv'
 data_df = pd.read_csv(data_path)
 data_df = data_df.drop(['RowNumber', 'Surname'], axis=1)
 st.write(data_df.head(20))
@@ -115,7 +115,7 @@ y = data_df['Exited']
 
 # to retrain
 agree = st.checkbox('Check to retrain the model')
-filename = 'finalized_model.sav'
+filename = 'model/finalized_model.sav'
 if agree:
     # Build Regression Model
     model = RandomForestRegressor()
