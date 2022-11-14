@@ -1,6 +1,4 @@
 import pickle
-import requests
-from io import BytesIO
 from PIL import Image
 
 import pandas as pd
@@ -10,9 +8,7 @@ import plotly.graph_objects  as go
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-
-response = requests.get(url='https://katonic.ai/favicon.ico')
-im = Image.open(BytesIO(response.content))
+im = Image.open('image/favicon.ico')
 
 st.set_page_config(
     page_title='Bank Customer Churn Prediction', 
@@ -83,14 +79,14 @@ data_df = MultiColumnLabelEncoder(columns = ['Geography', 'Gender']).fit_transfo
 def user_input_features():
 
     CreditScore = st.sidebar.slider('Credit Score', 350, 850, 650)
-    Geography = st.sidebar.select_slider('Geography', options=['Spain', 'France', 'Germany'])
-    Gender = st.sidebar.select_slider('Gender', options=['Male', 'Female'])
+    Geography = st.sidebar.selectbox('Geography', options=['Spain', 'France', 'Germany'])
+    Gender = st.sidebar.selectbox('Gender', options=['Male', 'Female'])
     Age = st.sidebar.slider('Customer Age', 18, 92, 38)
     Tenure = st.sidebar.slider('Account tenure in months', 0, 10, 5)
     Balance = st.sidebar.number_input('Balance', 0.0, 250898.09, 76485.88)
     NumOfProducts = st.sidebar.slider('No. Of Products', 1, 4, 1)
-    HasCrCard = st.sidebar.select_slider('Has Credit Card', options=[0, 1])
-    IsActiveMember = st.sidebar.select_slider('Is Customer Active Member', options=[0, 1])
+    HasCrCard = st.sidebar.selectbox('Has Credit Card', options=[0, 1])
+    IsActiveMember = st.sidebar.selectbox('Is Customer Active Member', options=[0, 1])
     EstimatedSalary = st.sidebar.number_input('Estimated Salary of the Customer', 11.58, 199992.48, 100090.23)
 
     data = {
@@ -141,7 +137,7 @@ if st.sidebar.button('Prediction'):
     st.header('Customer Churn Predictions')
     label = 'Exited' if prediction > 0.5 else 'Not Exited'
     st.write(f'Prediction Label: **{label}**')
-    st.write(f'Prediction Probability: **{prediction}**')
+    st.write(f'Prediction Probability: **{prediction[0]}**')
 else:
     st.warning('Please Click on Prediction')
 st.write('---')
